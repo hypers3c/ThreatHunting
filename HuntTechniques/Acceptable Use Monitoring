@@ -1,0 +1,11 @@
+Use Case: 
+Acceptable Use Monitoring 
+
+Description:
+Acceptable Use Monitoring covers a basic questions, i.e. what resource is being accessed by whom and when. Organizations generally publish policies for users to understand how they can use the organization’s resources in the best way. Organizations should develop a baseline document to set up threshold limits, critical resources information, user roles, and policies, and use that baseline document to monitor user activity, even after business hours, with the help of the SIEM solution. 
+
+Log Source: 
+Windows Security Logs 
+
+Splunk Query: 
+sourcetype="WinEventLog:Security" EventCode=4663 | stats count by Account_Name ,Object_Name ,Accesses| rename Account_Name as UserName,Object_Name as FileName,Accesses as Action | table UserName,FileName,Action 
