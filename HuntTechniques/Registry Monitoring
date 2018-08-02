@@ -1,0 +1,11 @@
+Use Case:
+Registry Monitoring
+
+Description:
+Registry Monitoring Usually whenever an executable install it made some changes to registry. So it is worth monitoring registry events/actions like set, delete etc. 
+
+Log Source:
+Windows Registry Logs 
+
+Splunk Query: 
+index=main sourcetype=WinRegistry | stats values(data) by key_path,registry_type,host | rename  host as "Machine Name" registry_type as Action values(data) as "New Value" key_path as "Path to Subkey"
