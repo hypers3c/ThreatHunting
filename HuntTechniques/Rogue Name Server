@@ -1,0 +1,12 @@
+Use Case:
+Roque Name Server
+
+Description:
+To monitor this type of activity, DNS, proxy and perimeter firewalls should be configured to send logs to Splunk. Inside Splunk creation of SIEM rule will actually monitor these logs: 
+
+Log Source:
+DNS Logs/Packets, Proxy Logs, Network Firewall Logs
+
+Splunk Query:
+index=perimeter_firewall or index=dns (TCP=53 OR UDP=53) NOT [| inputlookup internal_dns_list append =t  dns ] | dedup dns | rename dns as rouge_dns | table rouge_dns 
+ 
