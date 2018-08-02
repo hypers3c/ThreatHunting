@@ -2,7 +2,7 @@ Use Case:
 Roque Name Server
 
 Description:
-To monitor this type of activity, DNS, proxy and perimeter firewalls should be configured to send logs to Splunk. Inside Splunk creation of SIEM rule will actually monitor these logs: 
+To monitor this type of activity, DNS, proxy and perimeter firewalls should be configured to send logs to Splunk. Inside Splunk creation of SIEM rule will actually monitor these logs.
 
 Log Source:
 DNS Logs/Packets, Proxy Logs, Network Firewall Logs
