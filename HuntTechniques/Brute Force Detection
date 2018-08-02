@@ -1,0 +1,11 @@
+Use Case:
+Brute Force Detection On Windows
+
+Description:
+Detection of Possible Brute Force Attack With the evolution of faster and more efficient password cracking tools, brute force attacks are on a high against the services of an organization. As a best practice, every organization should configure logging practices for security events such as invalid number of login attempts, any modification to system files, etc., so that any possible attack underway will get noticed and treated before the attack succeeds. Organizations generally apply these security policies via a Group Policy Object (GPO) to all the hosts in their network. 
+
+Log Source: 
+Windows Security Logs 
+
+Splunk Query: 
+sourcetype="WinEventLog:Security" (EventCode=4625 AND "Audit Failure") | stats count by Account_Name | where count > 2
