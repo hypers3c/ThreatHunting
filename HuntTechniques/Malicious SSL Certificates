@@ -1,0 +1,19 @@
+Use Case: 
+Malicious SSL Certificate
+Description:
+Just like banks, airlines and every other industry, advanced adversaries are moving to SSL encrypted communications to evade detection. Despite SSL encrypted communications, an organization might need to detect malicious connections. Threat hunters should look for clear text fiels of SSL Certificates (Cert Isssuer, Cert Common Name, etc)
+Log Source: 
+SSL Traffics (Port 443, 993, 8443 and/or uncommon ports)
+Splunk Query:
+sourcetype=stream:tcp ssl_cert_sha1=*
+ | stats VALUES(ssl_issuer) AS ssl_issuer VALUES(ssl_subject_common_name) AS ssl_subject_common_name VALUES(dest_ip) AS dest_ip count(ssl_subject_common_name)  AS count BY ssl_cert_sha1
+ | search count=1
+ | eval list="*"
+ |`ut_parse(ssl_subject_common_name,list)`
+ | lookup alexa-1MM domain AS ut_domain
+ | fillnull value=NULL rank
+ | search rank=NULL
+ | stats VALUES(ssl_cert_sha1) VALUES(ssl_subject_common_name) AS ssl_subject_common_name VALUES(dest_ip) AS dest_ip values(ut_domain) AS ut_domain count(ssl_subject_common_name)  AS count BY ssl_issuer
+ Note: You can download a sample of Alexa 1 million from the following link:
+ https://github.com/rkovar/splunk-hunting-helpers/tree/master/conf2017_SSL_talk
+ 
