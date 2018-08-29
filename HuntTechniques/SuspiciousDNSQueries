@@ -1,1 +1,0 @@
-Suppose you had a hypothesis that you could find suspicious domains in DNS and then pivot back to the systems generating these DNS requests. To test this hypothesis, you might end up examining the domain or sub-domain fields in your Splunk instance in an attempt to find high levels of Shannon entropy or potentially dissect the various aspects of the FQDN.

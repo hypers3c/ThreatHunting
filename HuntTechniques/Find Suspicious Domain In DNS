@@ -1,0 +1,17 @@
+Use Case: 
+Find Suspicious Domains/Subdomains in DNS Traffic
+
+Description:
+DNS can be very helpful in hunting. A hunter can find many interesting things in DNS traffic like anomaly in subdomains, domains, type of record an many others. In this use case, we are going to find suspicious subdomains in DNS stream traffic by using Shannon antropy method. We do that by URLToolBox, a free app in splunk for breaking down and parsing URLs.
+
+Log Source: 
+DNS Traffics
+
+Splunk Query: 
+index=* sourcetype=stream:dns record_type=A 
+| table query{}
+| lookup ut_parse_extended_lookup url AS query{}
+| search ut_domain!=None NOT (ut_domain_without_tld=microsoft OR ut_domain_without_tld=msn OR ut_domain_without_tld=akamaiedge OR  ut_domain_without_tld=akadns OR ut_domain=nsatc OR ut_domain=qwest.net OR ut_domain=windows.com OR ut_domain=arin.net)
+| `ut_shannon(ut_subdomain)`
+| stats count by query{} ut_domain ut_subdomain ut_shannon ut_domain_without_tld ut_tld 
+| sort - ut_shannon
