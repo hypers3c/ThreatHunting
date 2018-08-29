@@ -1,1 +1,16 @@
+Use Case: 
+Detecting Anomalies in HTTP BytesOut for Outgoing GET Requests
 
+Description:
+When you look at a number of multi-stage threats today, HTTP is a protocol that needs to be monitored; while firewalls may provide some level of understanding, monitoring HTTP on the wire provides the best visibility on your network. You can use Stream with HTTP for examining bytesIn/bytesOut outliers, suspicious URLs, requests without referer and many others. In this use case we are going to detect anomalies in bytesOut.
+
+Log Source: 
+HTTP Traffic
+
+Splunk Query: 
+index=* sourcetype=stream:http src_ip=192.168.* dest_ip!=192.168.* http_method=GET 
+| streamstats window=100 avg(bytes_out) as avg
+| eval outed=(avg * 2)
+| eval isOutlier=if(bytes_out > outed, 1, 0)
+| table src_ip dest_ip bytes_out site outed avg isOutlier
+| where isOutlier=1
