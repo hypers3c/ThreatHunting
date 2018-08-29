@@ -2,10 +2,10 @@ Use Case:
 Find Suspicious Domains/Subdomains in DNS Traffic
 
 Description:
-DNS can be very helpful in hunting. A hunter can find many interesting things in DNS traffic like anomaly in subdomains, domains, type of record an many others. In this use case, we are going to find suspicious subdomains in DNS stream traffic by using Shannon antropy method. We do that by URLToolBox, a free app in splunk for breaking down and parsing URLs.
+DNS can be very helpful in hunting. A hunter can find many interesting things in DNS traffic like anomaly in subdomains, domains, type of records and many others. In this use case, we are going to find suspicious subdomains in DNS stream traffic by using Shannon antropy method. We leverage URLToolBox, a free app in splunk for breaking down and parsing URLs.
 
 Log Source: 
-DNS Traffics
+DNS Traffics, DNS Logs
 
 Splunk Query: 
 index=* sourcetype=stream:dns record_type=A 
