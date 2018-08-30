@@ -1,0 +1,26 @@
+Here, we are going to review some principles and trips regarding practical threat hunting. 
+
+A.  The first item any hunters need is DATA. It's useful to have a centeralized repository of logs and other related data (e.g. PCAP files, TI feeds and many others). 
+
+Proxy and AV logs are the most beneficial data sources to analyze. 
+Proxy logs are a great place to START hunting. Some of the most important signs that you can look out for are:
+1. The same amount of bytes in and out.
+2. Suspicious sites (list DDNS sites that are visited by endpoints and find those that visit a specific site frequently)
+
+Windows logs should be overlooked for:
+1. Failed login attempts by multiple accounts. (Event IDs 4625, 529, 539)
+2. Explicit credentials (Whitelist or Blacklist explicit credentials. Event IDs 4648, 552)
+3. Priviledge Changes. (Event IDs 4728, 4732, 4756)
+4. Log clearing (Event IDs 104, 1102)
+5. EMET crash logs. (Event IDs 1000, 1002)
+6. Windows Defender Errors (Event IDs 1005, 1006, 1008, 1010, 2001, 2003, 2004, 3002, 5008)
+
+AV logs are important to check in detail.
+1. Signs of password dumping programs (It's possible that attacker try many dumper. So if your AV alert for a dumper, it doesn't mean that attacker failed completely. Attacker would try other dumpers. hunter should pay attention to those alert as starting point of investigation).
+2. Common backdoors (Some common advanced threat backdoors include PlugX, 9002 RAT, Nettraveler, Derusbi, Winnti, Pirpi, etc. If you come across names like these within your AV logs, you’ll know something untoward is taking place).
+3. Dropper programs (Identify any detections with the name ‘dropper’ in it).
+
+B.  The second item needed is a list of suspicious-type activities that would be generated out of the logs. It's an intelligence-driven approach.
+
+
+Ref: https://www.infosecurity-magazine.com/opinions/a-guide-to-cyber-threat-hunting/
