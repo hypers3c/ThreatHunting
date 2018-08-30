@@ -1,0 +1,12 @@
+Use Case:
+| metadata type=hosts 
+| eval "Last Recently"=now()-recentTime
+| search "Last Recently" > 86400
+| rename totalCount as Count, host as Host, firstTime as "First Event", lastTime as "Last Event", recentTime as "Last Update", type as Type
+| fieldformat "First Event"=strftime('First Event', "%c")
+| fieldformat "Last Event"=strftime('Last Event', "%c")
+| fieldformat "Last Update"=strftime('Last Update', "%c")
+| eval "Minutes Behind"=round('Last Recently'/60, 2)
+| eval "Hours Behind"=round('Last Recently'/3600, 2)
+| table Host, "First Event", "Last Event", "Last Update", "Minutes Behind", "Hours Behind"
+| sort - "Minutes Behind"
