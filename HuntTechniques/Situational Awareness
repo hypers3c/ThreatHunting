@@ -2,21 +2,40 @@ Use Case:
 Situational Awareness
 
 Description:
+To effectively hunt, understanding the data you have and don’t have for your hosts is key.  Without this knowledge, you risk making assumptions that lead to poor decisions whilst threat hunting. In this use case, we stated a couple of examples about how to know our data better.
+
+Log Source: 
+Metadata 
+
+1. Enumerate All SourceTypes for a specefic time and index
+Splunk Query:
+| metadata type=sourcetypes earliest=-7d index=main
+
+2. List of All Hosts have sent data for a specefic index
+Splunk Query:
+| metadata type=hosts earliest=-7d index=main
+
+3. List of All Hosts have not sent data past 24 hours
+Splunk Query:
 | metadata type=hosts 
-| eval "Last Recently"=now()-recentTime
-| search "Last Recently" > 86400
-| rename totalCount as Count, host as Host, firstTime as "First Event", lastTime as "Last Event", recentTime as "Last Update", type as Type
-| fieldformat "First Event"=strftime('First Event', "%c")
+| eval "Last Recently"=now()-recentTime (How many seconds ago the last log sent)
+| search "Last Recently" > 86400 (Filter just events related to before past day)
+| rename totalCount as Count, host as Host, firstTime as "First Event", lastTime as "Last Event", recentTime as "Last Update", type as Type (To be more readable titles)
+| fieldformat "First Event"=strftime('First Event', "%c") (To be more readable time)
 | fieldformat "Last Event"=strftime('Last Event', "%c")
 | fieldformat "Last Update"=strftime('Last Update', "%c")
-| eval "Minutes Behind"=round('Last Recently'/60, 2)
-| eval "Hours Behind"=round('Last Recently'/3600, 2)
-| table Host, "First Event", "Last Event", "Last Update", "Minutes Behind", "Hours Behind"
+| eval "Minutes Behind"=round('Last Recently'/60, 2) (Calculates Minutes past from the last log sent)
+| eval "Hours Behind"=round('Last Recently'/3600, 2) Calculates Hours past from the last log sent)
+| table Host, "First Event", "Last Event", "Last Update", "Minutes Behind", "Hours Behind" (Make results as tabular view)
 | sort - "Minutes Behind"
 
+4. View the state of sending logs by time intervals (per 7 Hours)
+Splunk Query:
 | tstats count where sourcetype=stream:dns by _time, host span=7h
 | xyseries _time, host, count
 
+5. Identify hosts that are logging more or less data than might be normally expected 
+Splunk Query:
 | tstats count by host, _time span=3h
 | stats median(count) as median by host
 | join host [| tstats count where earliest=-900d by host ]
