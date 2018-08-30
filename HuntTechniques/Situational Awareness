@@ -1,4 +1,7 @@
 Use Case:
+Situational Awareness
+
+Description:
 | metadata type=hosts 
 | eval "Last Recently"=now()-recentTime
 | search "Last Recently" > 86400
@@ -10,3 +13,16 @@ Use Case:
 | eval "Hours Behind"=round('Last Recently'/3600, 2)
 | table Host, "First Event", "Last Event", "Last Update", "Minutes Behind", "Hours Behind"
 | sort - "Minutes Behind"
+
+| tstats count where sourcetype=stream:dns by _time, host span=7h
+| xyseries _time, host, count
+
+| tstats count by host, _time span=3h
+| stats median(count) as median by host
+| join host [| tstats count where earliest=-900d by host ]
+| eval perc_diff=((count/median)*100)-100
+| where perc_diff>700 OR perc_diff<30
+| sort perc_diff
+| rename median as "Median Event Count Past 2 years", count as "Event Count Past 1 year", perc_diff as "Perentage Difference"
+
+
