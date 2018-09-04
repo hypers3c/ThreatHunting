@@ -1,0 +1,43 @@
+A sample scenario for threat hunting that every huner needs to follow. The case study focuses on adversary detection, analysis, and eviction.
+Two main purposes to this case study scenario are: 
+To learn technical hunt concepts 
+To gain n a better understanding of a practical hunting process
+imagine an example enterprise that hasn’t recently identified any malicious behavior on the internal networks. Hunter decides to proactively hunt on the networks. In this sample, he/she uses the organization’s most recent cyber risk assessment report to determine priorities and select the assets to hunt on first.
+The hunting phases that the hunter follows are:
+Preparation
+Investigation 
+Adversary Removal 
+Synopsis of the Hunt Hunt 
+Reporting
+
+Preparation:
+Determine high priority assets:
+Before proactive hunting starts, the hunter needs to decide which assets should be the initial focus of the hunt. This can be gained by cyber risk assessment report of the company. The hunter reviews the highest-priority group of IT functions in the report and translates those functions, which are described from a business perspective (e.g., “credit card processing sys- tems”), into the corresponding IT asset information that the hunt team needs: IP addresses, hostnames, process names, usernames, etc.
+Review available IT asset and network information:
+The hunter asks for the company’s latest IT network maps and asset inventory information. He/She will need to confirm as needed which assets of interest are currently connected to the network and to get more information on these assets, such as knowing which major applications each asset is authorized to run, which assets have used the organization’s networks in the past and what software they should be running. 
+Understand what’s considered normal activity:
+A hunter who knows what’s normal for an organization’s assets and networks will be much better prepared to spot deviations from the norm. the hunter is new to the company, so it’s worth spending time talking with system administrators, incident responders, and other IT staff members to learn more about normal activity. This can be as simple as knowing what the typical work days and hours are for people in different roles within the company (e.g., standard users, managers, develop- ers, system administrators.) This can also be complex, including gathering detailed information on which assets people in each role may access, and which applications are whitelisted (allowed) or blacklisted (prohibited) on the company’s assets.
+Configure and deploy hunt sensor software:
+For operational reasons, the company might choose an on-demand deployment strategy or Enterprise-wide deployment. We suppose the company has chosen the first one. The hunter is responsible for ensuring that the hunt sensor software is deployed to all the assets included in the initial round of hunting and also configuring the default settings for the hunt sensors.
+Investigation:
+So far, the hunter has completed all the preparatory activities. It’s time to investigate the selected assets for the presence of adversaries. This investigation is documented in four parts: scoping the investigation, gathering and analyzing information, expanding the investigation, and reprioritizing the hunt.
+Scoping the investigation:
+Because there’s no evidence of compromises or other malicious activity involving these assets, the first step in this investigation is to scope the work by selecting which aspects of each asset will be examined initially. The hunter determines that the most important things to look for all involve the execution of processes and services. These characteristics fall into three groups:
+Currently running processes and services
+The hunter needs to examine the full path of the executable for each currently running process and service, to include the executable’s filename. Questions to be answered include:
+1. Should this executable be running on this machine? Does its full path seem reasonable? For example, is the executable running from the appropriate system or application directory?
+2. Which user ran the executable? Does this seem reasonable?
+3. Was the executable run from the command line? If so, what were the command line arguments?
+4. Does the code in the running process or service exist in a file stored on the asset’s disk? If no, why doesn’t such a file exist? (This is not typically benign behavior.)
+5. If the code is in a stored file, does the file’s hash match the vendor’s hash for the file? Does this file exist on other assets, is it in the same location, and does it have the same hash as the copies on the other assets?
+6. Which network connections are bound to the process or service? For each connection, the IP addresses and ports used by both endpoints must be noted.
+7. Does it appear that all the loaded modules (executa- bles and DLLs) indicated by the Process Environment Block (PEB) and import tables for a particular process or service are appropriate?
+8. Are all registry keys associated with the process or service in the correct locations?
+9. Do all open file handles (the files that the process or service is reading from and/or writing to) make sense?
+Recently run processes/services:
+The hunter also needs to examine available information about processes and services that were recently executed. Such information is available from the Prefetch folder and the registry keys for Application Compatibility Cache (ShimCache). This information must be evaluated to see if the processes and services run on the asset make sense. For example, did the full path of the executable seem reasonable?
+Processes/services set to run in the future:
+Finally, the processes and services set to run in the future must be examined to ensure that all the processes and services
+should be executed on the asset. The executables slated to be run can be identified in one of two places:
+Registry auto-run keys. The purpose of these keys is to list executables to be automatically run in the future, such as when the asset is rebooted or when a local user logs in.
+Scheduled tasks. Users can schedule a particular executable to run in the future and designate the date and time when it will be started.
