@@ -1,19 +1,19 @@
 A sample scenario for threat hunting that every hunter needs to follow. The case study focuses on adversary detection, analysis, and eviction.
 Two main purposes to this case study scenario are: 
   • To learn technical hunt concepts 
-  • To gain n a better understanding of a practical hunting process
-Consider an example enterprise that hasn’t recently identified any malicious behavior on the internal networks. Hunter decides to proactively hunt on the networks. In this sample, he/she uses the organization’s most recent cyber risk assessment report to determine priorities and select the assets to hunt on first.
+  • To gain a better understanding of a practical hunting process
+Consider a company that hasn’t recently identified any malicious behavior on the internal networks. Hunter decides to proactively hunt on the networks. In this sample, he/she uses the organization’s most recent cyber risk assessment report to determine priorities and select the assets to hunt on first.
 The hunting phases that the hunter follows are:
   • Preparation
   • Investigation 
   • Adversary Removal 
   • Synopsis of the Hunt 
   • Reporting
-
+=====================================================================================================================================
 • Preparation:
   • Determine high priority assets:
-  Before proactive hunting starts, the hunter needs to decide which assets should be the initial focus of the hunt. This can be gained by cyber risk assessment report of the company. The hunter reviews the highest-priority group of IT functions in the report and translates those functions, which are described from a business perspective (e.g., “credit card processing systems”), into the corresponding IT asset information that the hunt team needs: IP addresses, hostnames, process names, usernames, etc.
-  • Review available IT asset and network information:
+  Before proactive hunting starts, the hunter needs to decide which assets should be the initial focus of the hunt. This can be gained from cyber risk assessment report of the company. The hunter reviews the highest-priority group of IT functions in the report and translates those functions, which are described from a business perspective (e.g., “credit card processing systems”), into the corresponding IT asset information that the hunt team needs: IP addresses, hostnames, process names, usernames, etc.
+  • Review available IT assets and networks information:
   The hunter asks for the company’s latest IT network maps and asset inventory information. He will need to confirm as needed which assets of interest are currently connected to the network and to get more information on these assets, such as knowing which major applications each asset is authorized to run, which assets have used the organization’s networks in the past and what software they should be running. 
   • Understand what’s considered normal activity:
   A hunter who knows what’s normal for an organization’s assets and networks will be much better prepared to spot deviations from the norm. the hunter is new to the company, so it’s worth spending time talking with system administrators, incident responders, and other IT staff members to learn more about normal activity. This can be as simple as knowing what the typical work days and hours are for people in different roles within the company (e.g., standard users, managers, developers, system administrators.) This can also be complex, including gathering detailed information on which assets people in each role may access, and which applications are whitelisted (allowed) or blacklisted (prohibited) on the company’s assets.
