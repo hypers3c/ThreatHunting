@@ -10,8 +10,7 @@ The hunting phases that the hunter follows are:
   •	Synopsis of the Hunt 
   •	Reporting
 
-•	Preparation:
-
+• Preparation:
   •	Determine high priority assets:
   Before proactive hunting starts, the hunter needs to decide which assets should be the initial focus of the hunt. This can be gained by cyber risk assessment report of the company. The hunter reviews the highest-priority group of IT functions in the report and translates those functions, which are described from a business perspective (e.g., “credit card processing systems”), into the corresponding IT asset information that the hunt team needs: IP addresses, hostnames, process names, usernames, etc.
   •	Review available IT asset and network information:
