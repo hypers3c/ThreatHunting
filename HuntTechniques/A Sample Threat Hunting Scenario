@@ -11,19 +11,19 @@ The hunting phases that the hunter follows are:
   •	Reporting
 
 • Preparation:
-  •	Determine high priority assets:
+  • Determine high priority assets:
   Before proactive hunting starts, the hunter needs to decide which assets should be the initial focus of the hunt. This can be gained by cyber risk assessment report of the company. The hunter reviews the highest-priority group of IT functions in the report and translates those functions, which are described from a business perspective (e.g., “credit card processing systems”), into the corresponding IT asset information that the hunt team needs: IP addresses, hostnames, process names, usernames, etc.
-  •	Review available IT asset and network information:
+  • Review available IT asset and network information:
   The hunter asks for the company’s latest IT network maps and asset inventory information. He will need to confirm as needed which assets of interest are currently connected to the network and to get more information on these assets, such as knowing which major applications each asset is authorized to run, which assets have used the organization’s networks in the past and what software they should be running. 
-  •	Understand what’s considered normal activity:
+  • Understand what’s considered normal activity:
   A hunter who knows what’s normal for an organization’s assets and networks will be much better prepared to spot deviations from the norm. the hunter is new to the company, so it’s worth spending time talking with system administrators, incident responders, and other IT staff members to learn more about normal activity. This can be as simple as knowing what the typical work days and hours are for people in different roles within the company (e.g., standard users, managers, developers, system administrators.) This can also be complex, including gathering detailed information on which assets people in each role may access, and which applications are whitelisted (allowed) or blacklisted (prohibited) on the company’s assets.
-  •	Configure and deploy hunt sensor software:
+  • Configure and deploy hunt sensor software:
   For operational reasons, the company might choose an on-demand deployment strategy or Enterprise-wide deployment. We suppose the company has chosen the first one. The hunter is responsible for ensuring that the hunt sensor software is deployed to all the assets included in the initial round of hunting and also configuring the default settings for the hunt sensors.
-•	Investigation:
+• Investigation:
   So far, the hunter has completed all the preparatory activities. It’s time to investigate the selected assets for the presence of adversaries. This investigation is documented in four parts: scoping the investigation, gathering and analyzing information, expanding the investigation, and reprioritizing the hunt.
-  •	Scoping the investigation:
+  • Scoping the investigation:
   Because there’s no evidence of compromises or other malicious activity involving these assets, the first step in this investigation is to scope the work by selecting which aspects of each asset will be examined initially. The hunter determines that the most important things to look for all involve the execution of processes and services. These characteristics fall into three groups:
-  o	Currently running processes and services
+  o Currently running processes and services
   The hunter needs to examine the full path of the executable for each currently running process and service, to include the executable’s filename. Questions to be answered include:
   1. Should this executable be running on this machine? Does its full path seem reasonable? For example, is the executable running from the appropriate system or application directory?
   2. Which user ran the executable? Does this seem reasonable?
@@ -34,13 +34,13 @@ The hunting phases that the hunter follows are:
   7. Does it appear that all the loaded modules (executables and DLLs) indicated by the Process Environment Block (PEB) and import tables for a particular process or service are appropriate?
   8. Are all registry keys associated with the process or service in the correct locations?
   9. Do all open file handles (the files that the process or service is reading from and/or writing to) make sense?
-    o	Recently run processes/services:
+    o Recently run processes/services:
     The hunter also needs to examine available information about processes and services that were recently executed. Such information is available from the Prefetch folder and the registry keys for Application Compatibility Cache (ShimCache). This information must be evaluated to see if the processes and services run on the asset make sense. For example, did the full path of the executable seem reasonable?
-    o	Processes/services set to run in the future:
+    o Processes/services set to run in the future:
     The executables slated to be run can be identified in one of two places:
       	Registry auto-run keys. The purpose of these keys is to list executables to be automatically run in the future, such as when the asset is rebooted or when a local user logs in.
       	Scheduled tasks. Users can schedule a particular executable to run in the future and designate the date and time when it will be started.
-•	Gathering and analyzing information
+• Gathering and analyzing information
 At this point, the hunter has defined the scope of the investigation but hasn’t yet collected the necessary information within that scope. The company’s hunt sensor software can automatically do this work on the hunter’s behalf, speeding up the hunt considerably. Remind three key concepts to keep in mind:
   	Assume that the asset has already been compromised.
   	Look for compromises at any phase of an attack, from an initial exploit to implants that the adversary is no longer utilizing.
