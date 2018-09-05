@@ -1,14 +1,14 @@
 A sample scenario for threat hunting that every hunter needs to follow. The case study focuses on adversary detection, analysis, and eviction.
 Two main purposes to this case study scenario are: 
-  •	To learn technical hunt concepts 
-  •	To gain n a better understanding of a practical hunting process
+  • To learn technical hunt concepts 
+  • To gain n a better understanding of a practical hunting process
 Consider an example enterprise that hasn’t recently identified any malicious behavior on the internal networks. Hunter decides to proactively hunt on the networks. In this sample, he/she uses the organization’s most recent cyber risk assessment report to determine priorities and select the assets to hunt on first.
 The hunting phases that the hunter follows are:
-  •	Preparation
-  •	Investigation 
-  •	Adversary Removal 
-  •	Synopsis of the Hunt 
-  •	Reporting
+  • Preparation
+  • Investigation 
+  • Adversary Removal 
+  • Synopsis of the Hunt 
+  • Reporting
 
 • Preparation:
   • Determine high priority assets:
