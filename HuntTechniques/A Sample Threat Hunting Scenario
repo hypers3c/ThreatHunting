@@ -45,4 +45,44 @@ At this point, the hunter has defined the scope of the investigation but hasn’
   	Assume that the asset has already been compromised.
   	Look for compromises at any phase of an attack, from an initial exploit to implants that the adversary is no longer utilizing.
   	Consider how an adversary would think and react. 
-The hunter quickly discovers that the third server, which is the primary web server that the company’s customers use, has a running process that seems suspicious.
+The hunter quickly discovers that the third server, which is the primary web server that the company’s customers use, has a running process that seems suspicious. The hunter also takes a closer look at the compromised web server. Additional information to be obtained includes the following:
+  The usernames for all users currently logged into the server
+  The open file handles for all suspicious processes and services executing on the server
+  A copy of each file stored on disk that’s related to the suspicious processes and services
+  A memory dump for each suspicious process or service
+  A packet capture of all network traffic for the server
+  • Reprioritizing the hunt
+  While the hunt sensors are collecting and analyzing more information, the hunter receives an alert from the hunt sensor on the company’s most critical database server. This alert indicates the presence of an unknown persistent service on that server, so he immediately reprioritizes hunting to focus on the database server.
+  Throughout the hunt, hunters must constantly reprioritize their focus based on updated risk assessments, their understanding of the value of particular assets, and the security event information provided by hunt sensors and other enterprise security controls.
+  A quick review of the current and recent hunt sensor monitoring within the database server indicates that the server has an established, encrypted connection to an external IP address.
+  The hunter can see that a large amount of data is being transmitted from the database server to the external IP address, and that the service associated with the network connection is the same service that generated the unknown persistent service alert.
+Kill the service associated with the exfiltration. The hunter would rather suspend the thread than kill the service because the latter can cause a significant disruption to operations. On the other hand, the entire service could be malicious, in which case suspending the thread won’t be an effective form of remediation.
+Disable network access. Isolating the database server from other servers prevents further exfiltration and blocks the adversary from accessing the database server. Of course, this isolation also prevents all operational use of the database server, which will cause major production outages.
+In this case, the hunt sensor indicates that there’s a single malicious thread responsible for exfiltrating the data, and the service in question isn’t malicious. This makes the decision easy. Pat orders the database server’s hunt sensor to suspend the malicious thread. This action breaks the connection between the database server and the adversary while avoiding any disruption of the critical services that the database server provides to the company’s customers, employees, vendors, business partners, and contractors.
+•	Adversary Removal
+All evidence points to an adversary exfiltrate sensitive data from the company via the compromised database server. The hunter must act as quickly as possible to stop the compromise by disrupting the exfiltration communications. Possible methods for handling this situation include the following:
+  	Suspend the thread or threads associated with the exfiltration. Pat must consider the likelihood that the activity is malicious and the criticality of the service being compromised by the thread.
+  	Kill the service associated with the exfiltration. The hunter would rather suspend the thread than kill the service because the latter can cause a significant disruption to operations. On the other hand, the entire service could be malicious, in which case suspending the thread won’t be an effective form of remediation.
+  	Disable network access. Isolating the database server from other servers prevents further exfiltration and blocks the adversary from accessing the database server. Of course, this isolation also prevents all operational use of the database server, which will cause major production outages.
+In this case, the hunt sensor indicates that there’s a single malicious thread responsible for exfiltrating the data, and the service in question isn’t malicious. This makes the decision easy. Pat orders the database server’s hunt sensor to suspend the malicious thread. This action breaks the connection between the database server and the adversary while avoiding any disruption of the critical services that the database server provides to the company’s customers, employees, vendors, business partners, and contractors.
+•	Synopsis of the Hunt
+Let’s fast forward to the end of the hunt investigation and recovery actions related to the compromised database server. Here’s a synopsis of the most noteworthy actions:
+1. Based on information provided by the hunter and the database server’s hunt sensor, the hunter and other hunters searched all assets across the enterprise for the following:
+  b. Any network connections involving the same external IP address that the database server was connected to and from which data was exfiltrated.
+  c. Any files with the same filenames and/or file hashes as the malicious files found on the database server
+  d. Any registry keys matching the malicious registry keys found on the database server
+2. The search for these characteristics identified an additional compromised asset: a Microsoft Exchange server. This server had the same malicious thread, executable file, and registry keys found on the database server, but the executable on the Exchange server was not currently running.
+3. The company’s incident response team forensically collected all files on the two servers associated with the malicious services, and they initiated chain of custody procedures. The files were turned over to the company’s malware reverse engineers for further analysis.
+4. Pat and other hunters removed all of the malicious files (including executables and other DLLs) and associated malicious registry keys from the compromised assets.
+5. System administrators discovered that the compromised web server was missing a patch. Without this patch, the server was susceptible to users executing arbitrary code. The system administrators also determined that the web server and the database server had the same username and password for their local administrator accounts. This is how the adversary gained privileged access to the database server.
+6. System administrators forced the change of all passwords for all local accounts on the web server and database server to prevent future reuse of any credentials that were compromised.
+7. When Pat finished hunting on the database server, the hunt sensor was removed from the server in accordance with the company’s on-demand deployment strategy.
+• Hunt Reporting
+The hunter documented the findings and results for the hunt on an ongoing basis, issuing a separate report for each major compromise investigated through hunting. Pat’s report for the database server compromise includes the following information:
+  	An executive summary that reiterates the most important points from the report
+  	The scope of the compromise, such as which business processes, IT assets, users, data sets, etc. were affected, in what ways they were affected, and how long they were affected
+  	The identity of the adversary, if known
+  	A timeline of the activities involving the compromise and the hunt investigation into that compromise
+  	A narrative corresponding to the timeline, indicating what the findings were at each step in the hunt process, which tools or techniques were used for each step, who received information from the hunters and when, what challenges or other issues were encountered and how they were resolved (or why they aren’t yet resolved), etc.
+  	The root cause or causes of the compromise
+  	Recommendations for improving the company’s security and for making future hunts more effective, and the consequences to the company if these recommendations are not followed
