@@ -1,1 +1,11 @@
-Use
+Use Case: 
+Hunting Discovery Commands
+
+Description:
+Today's adversaries attempt to discover victim's machine and network to spread into other targets. There are many windows command utilities can be used to discovery.
+
+Log Source: 
+Sysmon
+
+Splunk Query: (Based-On Splunk Dataset Project)
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" "net *" | stats count by CommandLine, Computer
