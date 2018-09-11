@@ -17,6 +17,15 @@ Defense Evasion, Credential Access, Discovery, Collection, Execution, Lateral Mo
 Techniques:
 Process Discovery, Exfiltration over Command and Control Channel, Command-Line Interface, Rundll32, Remote System Discovery, System Network Connections Discovery, File and Directory Discovery, File Deletion, Remote File Copy, New Service, Modify Existing Service, Service Execution, Query Registry, Modify Registry, Screen Capture, Redundant Access, Input Capture, Syste Information Discovery, Network Share Discovery, Account Discovery, Permission Groups Discovery, Credential Dumping, Remote Services, Scheduled Task, Credentials in Files
 
+Splunk Query:
+Your first checking and finding:
+sourcetype=sysmon CommandLine="*schtasks*" ParentImage="*cmd.exe" (If any event result returned, then you,re on Persistence phase.)
++ Oh! Good! we find an indicator around Persistent phase. So, Let's check for other phases. Thanks to MITRE Report, we first check for Discovery phase:
 
- 
+.
+.
+.
+.
+
+
 
