@@ -19,9 +19,12 @@ Process Discovery, Exfiltration over Command and Control Channel, Command-Line I
 
 Splunk Query:
 Your first checking and finding:
-sourcetype=sysmon CommandLine="*schtasks*" ParentImage="*cmd.exe" (If any event result returned, then you,re on Persistence phase.)
-+ Oh! Good! we find an indicator around Persistent phase. So, Let's check for other phases. Thanks to MITRE Report, we first check for Discovery phase:
+- sourcetype=sysmon CommandLine="*schtasks*" ParentImage="*cmd.exe" (If any event result returned, then you,re on Persistence phase.)
 
++ Oh! Good! we found an indicator around Persistent phase. So, Let's check for other phases. Thanks to MITRE Report, we first check for Discovery phase:
+- sourcetype=sysmon (CommandLine="net *" OR CommandLine="whoami" OR CommandLine="tasklist" OR CommandLine="netstat") parent_process="*cmd.exe" | stats count by CommandLine, Host, User
+
+Ongoing...
 .
 .
 .
