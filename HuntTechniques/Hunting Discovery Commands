@@ -2,10 +2,11 @@ Use Case:
 Hunting Discovery Commands
 
 Description:
-Today's adversaries attempt to discover victim's machine and network to spread into other targets. There are many windows command utilities can be used to discovery.
+Today's adversaries attempt to discover victim's machine and network to spread into other targets. There are many windows command-line utilities can be used to discovery such as Discovery:
+whoami, net config [workstation/server], ipconfig [/all], net localgroup "<Group Name>", net group "Domain Computer"/domain[:Domain], etc.
 
 Log Source: 
 Sysmon
 
 Splunk Query: (Based-On Splunk Dataset Project)
-sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" "net *" | stats count by CommandLine, Computer
+sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" (CommandLine="net *" OR CommandLine="whoami" OR CommandLine="tasklist" OR CommandLine="netstat") parent_process="*cmd.exe" | stats count by CommandLine, Host, User
