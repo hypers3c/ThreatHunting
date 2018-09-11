@@ -1,1 +1,22 @@
+Use Case:
+APT3 Detection Techniques
+
+Description:
+APT3 is a China-based threat group. APT3 has traditionally targeted a myriad of US and international targets; however, reporting dated September 2016 indicates the group shifted focus around March 2016 to target Hong Kong organizations.
+APT3’s process can be broken up into three main phases as shown below:
+
+  1. Initial Setup of command and control (C2), defense evasion techniques, and getting initial compromise
+  2. Discovery, privilege escalation, lateral movement, persistence, and execution
+  3. Collection, data staging, and exfiltration
+** Important Note: 
+"If you find one of the indicators pointing the following techniques, then you should pivot or go forward and/or backward based-on ATT@CK Model. For example, if you find an indicator around 'SMB Copy' (ATT@CK:T1077), then you are on Lateral Movement phase. so, you can check for indicators related to Execution phase (the next phase) or Persistent, Credientail Access, Priviledge Escalation, Discovery and/or Defense Evasion phases(the pervious phases). Using threat intelligence or public incident reports (related to APT3 - such as FireEye Report, MITRE Report, etc) can significantly and effectively narrow your searches and time."
+ 
+Tactics:
+Defense Evasion, Credential Access, Discovery, Collection, Execution, Lateral Movement
+
+Techniques:
+Process Discovery, Exfiltration over Command and Control Channel, Command-Line Interface, Rundll32, Remote System Discovery, System Network Connections Discovery, File and Directory Discovery, File Deletion, Remote File Copy, New Service, Modify Existing Service, Service Execution, Query Registry, Modify Registry, Screen Capture, Redundant Access, Input Capture, Syste Information Discovery, Network Share Discovery, Account Discovery, Permission Groups Discovery, Credential Dumping, Remote Services, Scheduled Task, Credentials in Files
+
+
+ 
 
